@@ -12,9 +12,11 @@ services:
     ports:
       - "8180:8080"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ready"]
-      interval: 30s
-      retries: 5
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/realms/master || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 40s  # Keycloak tarda en arrancar
 
   app:
     build: .
@@ -22,8 +24,10 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      KEYCLOAK_URL: http://keycloak:8080
-      KEYCLOAK_CLIENT_SECRET: tu-secret
+      # Dentro de Docker, keycloak es el nombre del servicio en puerto interno 8080
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/sso-realm
+      # El redirect va al browser del usuario, entonces sigue siendo localhost
+      APP_BASE_URL: http://localhost:8080
     depends_on:
       keycloak:
         condition: service_healthy
