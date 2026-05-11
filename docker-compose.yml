@@ -5,10 +5,6 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_HOSTNAME_URL: http://localhost:8180
-      KC_HOSTNAME_ADMIN_URL: http://localhost:8180
-      KC_HOSTNAME_STRICT: "false"
-      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
     command: start-dev --import-realm
     volumes:
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
@@ -21,11 +17,10 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      # Backend → Keycloak (red interna Docker)
-      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/sso-realm
-      # Issuer que viene dentro de los tokens (URL pública)
-      KEYCLOAK_PUBLIC_ISSUER_URI: http://localhost:8180/realms/sso-realm
-      # Redirect del browser
+      # El browser del usuario usa localhost:8180
+      KEYCLOAK_PUBLIC_URL: http://localhost:8180
+      # El backend se comunica via red Docker
+      KEYCLOAK_INTERNAL_URL: http://keycloak:8080
       APP_BASE_URL: http://localhost:8080
     depends_on:
       - keycloak
