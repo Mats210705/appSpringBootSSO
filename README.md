@@ -111,43 +111,46 @@ Decisiones de diseño
 Estructura del proyecto
 
 
-  src/
-  ├── main/
-  │   ├── java/com/orbit/sso/
-  │   │   ├── config/
-  │   │   │   ├── SecurityConfig.java
-  │   │   │   └── SwaggerConfig.java
-  │   │   ├── controller/
-  │   │   │   ├── ApiMeController.java
-  │   │   │   └── AuthController.java
-  │   │   ├── dto/
-  │   │   │   └── UserInfoDto.java
-  │   │   ├── exception/
-  │   │   │   └── GlobalExceptionHandler.java
-  │   │   ├── service/
-  │   │   │   └── UserService.java
-  │   │   └── SsoApplication.java
-  │   └── resources/
-  │       ├── templates/
-  │       │   ├── index.html
-  │       │   └── dashboard.html
-  │       ├── application.properties
-  │       ├── application-dev.properties
-  │       └── application-prod.properties
-  └── test/
-      └── java/com/orbit/sso/
-          ├── controller/
-          │   ├── ApiMeControllerTest.java
-          │   └── AuthControllerTest.java
-          ├── exception/
-          │   └── GlobalExceptionHandlerTest.java
-          ├── service/
-          │   └── UserServiceTest.java
-          └── SsoApplicationTests.java
-  keycloak/
-  └── realm-export.json
-  docker-compose.yml
-  Dockerfile
+```
+src/
+├── main/
+│   ├── java/com/orbit/sso/
+│   │   ├── config/
+│   │   │   ├── SecurityConfig.java
+│   │   │   └── SwaggerConfig.java
+│   │   ├── controller/
+│   │   │   ├── ApiMeController.java
+│   │   │   └── AuthController.java
+│   │   ├── dto/
+│   │   │   └── UserInfoDto.java
+│   │   ├── exception/
+│   │   │   └── GlobalExceptionHandler.java
+│   │   ├── service/
+│   │   │   └── UserService.java
+│   │   └── SsoApplication.java
+│   └── resources/
+│       ├── templates/
+│       │   ├── index.html
+│       │   └── dashboard.html
+│       ├── application.properties
+│       ├── application-dev.properties
+│       └── application-prod.properties
+└── test/
+    └── java/com/orbit/sso/
+        ├── controller/
+        │   ├── ApiMeControllerTest.java
+        │   └── AuthControllerTest.java
+        ├── exception/
+        │   └── GlobalExceptionHandlerTest.java
+        ├── service/
+        │   └── UserServiceTest.java
+        └── SsoApplicationTests.java
+
+keycloak/
+└── realm-export.json
+docker-compose.yml
+Dockerfile
+```
 
 
 Tests
