@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   keycloak:
     image: quay.io/keycloak/keycloak:23.0
@@ -12,21 +11,18 @@ services:
     ports:
       - "8180:8080"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/realms/master || exit 1"]
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /realms/master HTTP/1.0\\r\\n\\r\\n' >&3 && cat <&3 | grep -q 'realm'"]
       interval: 15s
-      timeout: 5s
+      timeout: 10s
       retries: 10
-      start_period: 40s  # Keycloak tarda en arrancar
-
+      start_period: 45s
   app:
     build: .
     ports:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      # Dentro de Docker, keycloak es el nombre del servicio en puerto interno 8080
       KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/sso-realm
-      # El redirect va al browser del usuario, entonces sigue siendo localhost
       APP_BASE_URL: http://localhost:8080
     depends_on:
       keycloak:
